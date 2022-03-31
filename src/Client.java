@@ -1,21 +1,22 @@
-import java.io.*;
-import java.net.*;
 
-public class Client {
-    public static void main(String[] args) {
-        // code
-        System.out.println("Starting Client");
-        try{
-            Socket s=new Socket("localhost",6666);
-            DataOutputStream dout = new DataOutputStream(s.getOutputStream());
-            System.out.println("Please enter your name: ");
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(System.in));
-            String name = reader.readLine();
-            dout.writeUTF(name);
-            dout.flush();
-            dout.close();
-            s.close();
-        }catch(Exception e){System.out.println(e);}
+import java.io.PrintStream;
+import java.net.Socket;
+import java.util.Scanner;
+
+public class Client
+{
+    public static void main(String[] args) throws Exception
+    {
+        Socket s = new Socket("localhost", 2222);
+        while(true)
+        {
+            Scanner clientInput = new Scanner(s.getInputStream());
+            String question = clientInput.nextLine();
+            System.out.println(question);
+            Scanner localInput = new Scanner(System.in);
+            PrintStream clientOutput = new PrintStream(s.getOutputStream());
+            clientOutput.println(localInput.nextLine());
+        }
+
     }
 }

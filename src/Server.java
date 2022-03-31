@@ -1,19 +1,29 @@
 import java.io.*;
 import java.net.*;
+import java.io.PrintStream;
+import java.net.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Server {
 
-    public static void main(String[] args) {
-        // code
-        System.out.println("Starting Server");
-        try{
-            ServerSocket ss=new ServerSocket(6666);
-            Socket s=ss.accept();
-            DataInputStream dis=new DataInputStream(s.getInputStream());
-            String  str=(String)dis.readUTF();
-            System.out.println("Client responded with:  "+str);
-            ss.close();
-        }catch(Exception e){System.out.println(e);}
+
+
+
+    public static void main(String[] args) throws Exception
+    {
+        ServerSocket s = new ServerSocket(2222);
+        ArrayList<ClientThread> theThreads = new ArrayList<ClientThread>();
+        while(true)
+        {
+            System.out.println("Listenning for Connection...");
+            Socket client = s.accept(); //blocks
+            ClientThread t = new ClientThread(client);
+            theThreads.add(t);
+            t.start();
+        }
+
     }
+
 
 }
