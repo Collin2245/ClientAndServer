@@ -26,11 +26,21 @@ public class ClientCORE
 
     public static void RequestByte() throws Exception
     {
+        boolean haveByte = false;
         for(String Client : ClientCORE.theConnectedClientIPs)
         {
             String[] IPandPort = Client.split(":");
             Socket s = new Socket(IPandPort[0], Integer.parseInt(IPandPort[1]));
             System.out.println("Connection established with Client. Hostname: " + IPandPort[0] + ", Port: " + IPandPort[1]);
+            if(haveByte)
+            {
+                //send byte logic
+            }
+            else
+            {
+                System.out.println("No byte found");
+            }
+
 
         }
     }
